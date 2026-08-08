@@ -1,0 +1,7 @@
+# Example input for generate_affiliate_dms.py
+# One account per line: @handle | short note on their niche/content
+# The note is optional -- delete this file's contents and paste your own list.
+@wellnesswithlex | anti-diet nutrition tips
+@fitnotskinny | body neutrality and strength training
+@snackswithsam | easy healthy recipes
+@theburnoutcoach

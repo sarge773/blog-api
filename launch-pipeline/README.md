@@ -1,0 +1,108 @@
+# Anything Meal Method — 7-day launch pipeline
+
+Stdlib-only Python scripts (no dependencies to install). Run from this
+directory.
+
+## Before you run anything
+
+Edit `config.py`:
+
+- `CHECKOUT_LINK` is a placeholder — put your real Payhip checkout/product
+  link in there.
+- `AFFILIATE_INFO_LINK` currently points at the preview link — point it at
+  wherever affiliates should go to apply / see the offer.
+- `LAUNCH_START_DATE` defaults to Mon 2026-08-10 — change it or pass
+  `--start-date` to `generate_calendar.py`.
+
+## Positioning decision baked into the content
+
+The guide itself has real food rules, a weight-loss goal, and
+non-negotiable structured days — it is not clinical "intuitive eating,"
+and marketing it that way risks pushback from that exact audience. The
+content bank instead leads with what's actually true and defensible:
+**this ends the restrict-binge cycle by scheduling indulgence instead of
+banning it** (reactance psychology — Fri/Sat/Sun dinners are planned, not
+"earned" or forbidden). No copy here claims "no rules," "intuitive
+eating," or invents launch-week urgency/discounts that don't exist. If
+you add a real limited-time bonus later, edit the relevant rows in
+`content_bank.py`.
+
+Platform: TikTok only (hook length, hashtag count 3–5, and CTA style are
+tuned for that — rework `content_bank.py` if you also want IG/YouTube
+Shorts variants).
+
+## Run order
+
+```bash
+python3 generate_calendar.py          # -> output/content_calendar.csv
+python3 generate_utm_links.py         # -> output/content_calendar_with_links.csv
+python3 generate_tracking_sheet.py    # -> output/tracking_sheet.csv
+python3 generate_affiliate_dms.py --accounts accounts_example.txt   # -> output/affiliate_dms.csv
+```
+
+### 1. `generate_calendar.py`
+21 hand-written posts (3/day × 7 days) across 4 pillars (myth_busting,
+relatable_story, quick_tip, social_proof), pulled from
+`content_bank.py`. Columns: `day, date, pillar, hook, caption, hashtags,
+cta`. The content itself lives in `content_bank.py` — edit it directly to
+change copy; re-run this script to regenerate the CSV with new dates.
+
+### 2. `generate_utm_links.py`
+Reads the calendar CSV and adds three columns: `preview_link_utm`,
+`checkout_link_utm`, `bio_link_utm`. Every post gets a unique
+`utm_content` (e.g. `d1_myth_busting_willpower-isnt-broken`) so you can
+see in Payhip/analytics exactly which video drove which click.
+
+**`bio_link_utm` logic:** TikTok only allows one live link in your bio.
+Days 1–5 use the preview link (let cold viewers see the guide before
+asking for money); from `config.CHECKOUT_SWITCH_DAY` (default: day 6)
+it switches to the checkout link for the audience that's already seen
+several days of content. Change the switch day, or ignore
+`bio_link_utm` entirely and use the two separate columns if you're on a
+link-in-bio tool that supports multiple buttons.
+
+### 3. `generate_tracking_sheet.py`
+One row per scheduled post: `date, day, pillar, post, views,
+link_clicks, sales, notes`. Open in Excel/Numbers/Sheets and fill in
+`views`/`link_clicks` from TikTok analytics and your UTM click data,
+and `sales` from your Payhip dashboard filtered by date, once a day.
+
+**Re-running this script overwrites the file** — it doesn't merge with
+data you've already logged. Once you start logging real numbers, stop
+re-running it (or copy your data out first).
+
+### 4. `generate_affiliate_dms.py`
+Paste your list of niche accounts into a text file (see
+`accounts_example.txt` for the format: `@handle | short niche note`,
+note is optional), then:
+
+```bash
+python3 generate_affiliate_dms.py --accounts your_accounts.txt
+```
+
+Outputs `handle, niche_note, dm_pitch, affiliate_info_link` — 3
+rotating DM templates so the outreach doesn't read as obviously
+copy-pasted, personalized with each account's niche note where given,
+offering `config.AFFILIATE_COMMISSION_PCT`% (default 40%).
+
+**Read this before sending:** Payhip generates each affiliate's own
+unique tracked referral link automatically, but only after *they* apply
+to your affiliate program (Payhip dashboard → Store → Affiliates) — you
+can't hand-craft a working per-affiliate commission link yourself ahead
+of time. So the DMs point people to apply, not to a live tracking link.
+Turn on Payhip's affiliate program for this product first if you
+haven't already.
+
+## Files
+
+```
+config.py                        shared settings — edit this first
+content_bank.py                  the actual 21 posts (edit content here)
+generate_calendar.py
+generate_utm_links.py
+generate_tracking_sheet.py
+generate_affiliate_dms.py
+accounts_example.txt             sample input for the DM generator
+output/                          generated CSVs, committed so you have them immediately — re-run the
+                                  scripts and re-commit after you edit config.py/content_bank.py
+```
