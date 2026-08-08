@@ -103,6 +103,7 @@ generate_utm_links.py
 generate_tracking_sheet.py
 generate_affiliate_dms.py
 accounts_example.txt             sample input for the DM generator
+sales_page_copy.md               Payhip sales page description (short blurb + full page + FAQ)
 output/                          generated CSVs, committed so you have them immediately — re-run the
                                   scripts and re-commit after you edit config.py/content_bank.py
 ```
