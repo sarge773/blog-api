@@ -31,7 +31,7 @@ CHECKOUT_LINK = "https://payhip.com/buy?s=1&cart_links%5B%5D=NdVT8&qty%5BNdVT8%5
 # payhip.com/b/yourproduct/{their-affiliate-key}). There is no way to
 # pre-generate that per-affiliate link yourself before they've signed
 # up, so this must be the signup code/link, not the product page.
-AFFILIATE_INFO_LINK = "REPLACE_WITH_YOUR_PAYHIP_AFFILIATE_SIGNUP_LINK"
+AFFILIATE_INFO_LINK = "https://payhip.com/auth/register/af680509b6061fe"
 
 # --- Launch window ---
 # TikTok only content, 7 days starting this date (Mon by default).

@@ -8,11 +8,11 @@ directory.
 Edit `config.py`:
 
 - `CHECKOUT_LINK` — done, set to your real Payhip checkout link.
-- `AFFILIATE_INFO_LINK` is still a placeholder — go to your Payhip dashboard
-  → Marketing → Affiliates, enable the affiliate program for this product,
-  set the commission % to match `AFFILIATE_COMMISSION_PCT`, and paste the
-  unique signup code/link shown there (not the preview link — see the
-  affiliate section below for why).
+- `AFFILIATE_INFO_LINK` — done, set to your Payhip affiliate signup link.
+  Just confirm you've actually enabled the affiliate program for this
+  product in Payhip (Marketing → Affiliates) and that the commission % set
+  there matches `AFFILIATE_COMMISSION_PCT` (40%) — the signup link alone
+  doesn't turn the program on if you haven't flipped that switch.
 - `LAUNCH_START_DATE` defaults to Mon 2026-08-10 — change it or pass
   `--start-date` to `generate_calendar.py`.
 
