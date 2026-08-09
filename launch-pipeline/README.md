@@ -7,10 +7,12 @@ directory.
 
 Edit `config.py`:
 
-- `CHECKOUT_LINK` is a placeholder — put your real Payhip checkout/product
-  link in there.
-- `AFFILIATE_INFO_LINK` currently points at the preview link — point it at
-  wherever affiliates should go to apply / see the offer.
+- `CHECKOUT_LINK` — done, set to your real Payhip checkout link.
+- `AFFILIATE_INFO_LINK` is still a placeholder — go to your Payhip dashboard
+  → Marketing → Affiliates, enable the affiliate program for this product,
+  set the commission % to match `AFFILIATE_COMMISSION_PCT`, and paste the
+  unique signup code/link shown there (not the preview link — see the
+  affiliate section below for why).
 - `LAUNCH_START_DATE` defaults to Mon 2026-08-10 — change it or pass
   `--start-date` to `generate_calendar.py`.
 
@@ -85,13 +87,17 @@ rotating DM templates so the outreach doesn't read as obviously
 copy-pasted, personalized with each account's niche note where given,
 offering `config.AFFILIATE_COMMISSION_PCT`% (default 40%).
 
-**Read this before sending:** Payhip generates each affiliate's own
-unique tracked referral link automatically, but only after *they* apply
-to your affiliate program (Payhip dashboard → Store → Affiliates) — you
-can't hand-craft a working per-affiliate commission link yourself ahead
-of time. So the DMs point people to apply, not to a live tracking link.
-Turn on Payhip's affiliate program for this product first if you
-haven't already.
+**Read this before sending:** on Payhip, *you* generate a unique
+affiliate signup code from your dashboard (Marketing → Affiliates) and
+share that with people you want as affiliates. Only after someone signs
+up under your code does Payhip generate their own personal tracked
+commission link (format: `payhip.com/b/yourproduct/{their-affiliate-key}`)
+— you can't hand-craft a working per-affiliate link yourself ahead of
+time. So `affiliate_info_link` in the output must be your signup
+code/link, not the product page. The script prints a warning and refuses
+to look correct until you've set `config.AFFILIATE_INFO_LINK` to that
+real signup link — don't send these DMs while it's still the
+placeholder.
 
 ## Files
 

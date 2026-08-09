@@ -17,14 +17,15 @@ referencing a specific niche.
 Output: output/affiliate_dms.csv with columns
     handle, niche_note, dm_pitch, affiliate_info_link
 
-IMPORTANT -- about the "affiliate link": Payhip generates each
-affiliate's own unique tracked referral link automatically once THEY
-apply to your affiliate program (Store > Affiliates in your Payhip
-dashboard). You cannot pre-generate a working per-affiliate tracking
-link yourself before they've joined. So affiliate_info_link here points
-to where they go to preview the product / apply -- the DM asks them to
-join, it doesn't hand them a live commission link. Set the real
-application/info URL in config.AFFILIATE_INFO_LINK.
+IMPORTANT -- about the "affiliate link": on Payhip, YOU (the seller)
+generate a unique affiliate signup code from your dashboard (Marketing
+> Affiliates), and share THAT with people you want as affiliates. Only
+after someone signs up under your code does Payhip generate their own
+personal tracked commission link -- you cannot pre-generate that
+per-affiliate link yourself. So affiliate_info_link here must be your
+signup code/link, not the product page. Set it in
+config.AFFILIATE_INFO_LINK once you've enabled the affiliate program
+for this product in your Payhip dashboard.
 
 Commission rate comes from config.AFFILIATE_COMMISSION_PCT.
 """
@@ -128,6 +129,15 @@ def main():
         writer.writerows(rows)
 
     print(f"Wrote {len(rows)} personalized DMs to {args.out}")
+    if "REPLACE_WITH_YOUR_PAYHIP_AFFILIATE_SIGNUP_LINK" in config.AFFILIATE_INFO_LINK:
+        print(
+            "NOTE: config.AFFILIATE_INFO_LINK is still a placeholder -- go to your Payhip "
+            "dashboard > Marketing > Affiliates, enable the affiliate program for this "
+            "product, set the commission % to match AFFILIATE_COMMISSION_PCT, and paste the "
+            "signup code/link shown there into config.py. Then re-run this script -- do not "
+            "send these DMs until that's fixed, the current link does not let anyone sign up "
+            "as an affiliate."
+        )
 
 
 if __name__ == "__main__":
