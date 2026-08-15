@@ -1,0 +1,6 @@
+# Example input for generate_affiliate_dms.py
+# One account per line: @handle | short note on their niche/content
+# The note is optional -- delete this file's contents and paste your own list.
+@example_account_one | short niche note
+@example_account_two | another niche note
+@example_account_three
